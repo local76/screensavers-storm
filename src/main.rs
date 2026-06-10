@@ -3,10 +3,9 @@
     windows_subsystem = "windows"
 )]
 
-mod runner;
 mod storm;
 
 fn main() {
     let effect = storm::Storm::new();
-    runner::run_main(effect, "storm");
+    library::screensaver_runner::run_main(effect, "storm");
 }
