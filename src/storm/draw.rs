@@ -198,6 +198,9 @@ impl Storm {
         // 4. Persistent logo cells (logo_cells) with dynamic rippling rain glows and puddle accumulation
         for cell in &self.logo_cells {
             if cell.active {
+                if cell.x >= cols || cell.y >= rows {
+                    continue;
+                }
                 // Active logo cells glow in bright white-blend, then fade to cold accent color base
                 let glow_val = cell.glow.min(1.0);
                 let fg_r = (cold_accent.0 as f32 + (255.0 - cold_accent.0 as f32) * glow_val * 0.7) as u8;
@@ -216,6 +219,9 @@ impl Storm {
             if cell.active && cell.water > 0.15 && cell.y > 0 {
                 let above_x = cell.x;
                 let above_y = cell.y - 1;
+                if above_x >= cols || above_y >= rows {
+                    continue;
+                }
                 let has_above_active = self.logo_cells.iter().any(|c| c.active && c.x == above_x && c.y == above_y);
                 if !has_above_active {
                     let w_level = cell.water;

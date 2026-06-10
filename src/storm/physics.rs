@@ -90,9 +90,14 @@ impl Storm {
             self.perch_points = perch_points;
 
             // Choose starting perch point
-            let p_idx = self.rng.next_usize(self.perch_points.len());
-            self.bird_perch_x = self.perch_points[p_idx].0 as f32;
-            self.bird_perch_y = self.perch_points[p_idx].1 as f32;
+            if !self.perch_points.is_empty() {
+                let p_idx = self.rng.next_usize(self.perch_points.len());
+                self.bird_perch_x = self.perch_points[p_idx].0 as f32;
+                self.bird_perch_y = self.perch_points[p_idx].1 as f32;
+            } else {
+                self.bird_perch_x = 0.0;
+                self.bird_perch_y = 0.0;
+            }
             self.bird_x = self.bird_perch_x;
             self.bird_y = self.bird_perch_y;
             self.bird_state = BirdState::Sitting;

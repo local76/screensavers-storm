@@ -63,58 +63,60 @@ impl Storm {
             }
 
             let col = drop.x as usize;
-            let row = drop.y as usize;
+            if drop.y >= 0.0 {
+                let row = drop.y as usize;
 
-            if col < cols && row < rows {
-                // Background drops do NOT collide with foreground elements
-                if !drop.is_background {
-                    // Check if we hit any logo cell (whether active or inactive)
-                    let mut hit = false;
-                    for cell in &mut self.logo_cells {
-                        if cell.x == col && cell.y == row {
-                            if !cell.active && self.phase == Phase::Building {
-                                cell.active = true;
-                                cell.glow = 1.0;
-                            }
-                            
-                            if cell.active {
-                                // Rain water piles up on the active OS/Kernel cells
-                                cell.water = (cell.water + 0.45).min(2.5);
+                if col < cols && row < rows {
+                    // Background drops do NOT collide with foreground elements
+                    if !drop.is_background {
+                        // Check if we hit any logo cell (whether active or inactive)
+                        let mut hit = false;
+                        for cell in &mut self.logo_cells {
+                            if cell.x == col && cell.y == row {
+                                if !cell.active && self.phase == Phase::Building {
+                                    cell.active = true;
+                                    cell.glow = 1.0;
+                                }
                                 
-                                // Spawn splash particles
-                                for _ in 0..3 {
-                                    self.splashes.push(Splash {
-                                        x: col as f32,
-                                        y: row as f32,
-                                        vx: self.rng.next_range(-3.0, 3.0),
-                                        vy: self.rng.next_range(-2.0, -0.5),
-                                        life: 0.5,
-                                        color: drop.color,
-                                        is_background: false,
-                                    });
-                                }
+                                if cell.active {
+                                    // Rain water piles up on the active OS/Kernel cells
+                                    cell.water = (cell.water + 0.45).min(2.5);
+                                    
+                                    // Spawn splash particles
+                                    for _ in 0..3 {
+                                        self.splashes.push(Splash {
+                                            x: col as f32,
+                                            y: row as f32,
+                                            vx: self.rng.next_range(-3.0, 3.0),
+                                            vy: self.rng.next_range(-2.0, -0.5),
+                                            life: 0.5,
+                                            color: drop.color,
+                                            is_background: false,
+                                        });
+                                    }
 
-                                // Reset drop
-                                let is_bg = self.rng.next_bool(0.5);
-                                let mut color = Self::cold_rain_color(&mut self.rng);
-                                if is_bg {
-                                    color = (
-                                        (color.0 as f32 * 0.35) as u8,
-                                        (color.1 as f32 * 0.35) as u8,
-                                        (color.2 as f32 * 0.35) as u8,
-                                    );
+                                    // Reset drop
+                                    let is_bg = self.rng.next_bool(0.5);
+                                    let mut color = Self::cold_rain_color(&mut self.rng);
+                                    if is_bg {
+                                        color = (
+                                            (color.0 as f32 * 0.35) as u8,
+                                            (color.1 as f32 * 0.35) as u8,
+                                            (color.2 as f32 * 0.35) as u8,
+                                        );
+                                    }
+                                    drop.is_background = is_bg;
+                                    drop.color = color;
+                                    drop.y = -self.rng.next_range(1.0, rows as f32);
+                                    drop.vy = self.rng.next_range(25.0, 45.0) * speed_mult * (if is_bg { 0.75 } else { 1.0 });
+                                    hit = true;
+                                    break;
                                 }
-                                drop.is_background = is_bg;
-                                drop.color = color;
-                                drop.y = -self.rng.next_range(1.0, rows as f32);
-                                drop.vy = self.rng.next_range(25.0, 45.0) * speed_mult * (if is_bg { 0.75 } else { 1.0 });
-                                hit = true;
-                                break;
                             }
                         }
-                    }
-                    if hit {
-                        continue;
+                        if hit {
+                            continue;
+                        }
                     }
                 }
             }
