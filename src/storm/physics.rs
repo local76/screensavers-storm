@@ -1,4 +1,4 @@
-//! Physics submodules and core resize checks/color generation helpers.
+﻿//! Physics submodules and core resize checks/color generation helpers.
 
 pub mod drops;
 pub mod entities;
@@ -6,7 +6,7 @@ pub mod lightning;
 
 use library::core::LcgRng;
 use library::core::logo_block::render_logo_block;
-use library::platform::native::sys_info::get_system_info;
+use library::toolkit::sys_info::get_system_info;
 
 use crate::storm::Storm;
 use crate::storm::types::{LogoCell, Phase, BirdState};

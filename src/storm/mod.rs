@@ -1,4 +1,4 @@
-//! Consolidated storm screensaver effect module.
+﻿//! Consolidated storm screensaver effect module.
 //!
 //! **Taxonomy Classification**: System Role (Purpose - Application Software).
 
@@ -10,7 +10,7 @@ use library::core::{LcgRng, TerminalCell};
 use std::time::Duration;
 use library::core::screensaver::Screensaver;
 
-use library::platform::native::sys_info::get_system_info;
+use library::toolkit::sys_info::get_system_info;
 
 
 #[allow(unused_imports)]
