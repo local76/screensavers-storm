@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=storm - retro terminal screensaver effect
+Comment=Screensaver effect: storm
+Exec=storm
+Icon=storm
+Terminal=false
+Categories=Screensaver;
