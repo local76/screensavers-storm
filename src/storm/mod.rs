@@ -11,7 +11,6 @@ use std::time::Duration;
 use library::core::screensaver::Screensaver;
 
 use library::platform::native::sys_info::get_system_info;
-use library::toolkit::sys_info::query_current_palette;
 
 
 #[allow(unused_imports)]
