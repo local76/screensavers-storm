@@ -13,8 +13,6 @@ use library::core::screensaver::Screensaver;
 use library::platform::native::sys_info::get_system_info;
 use library::toolkit::sys_info::query_current_palette;
 
-use library::toolkit::rgb_controller::{RgbController, is_openrgb_enabled};
-use library::toolkit::rgb_protocol::RgbColor;
 
 #[allow(unused_imports)]
 pub use self::types::{LogoCell, Drop, Splash, Phase, BirdState, AnimalType, AnimalState, Animal, SceneryCell};
@@ -75,7 +73,6 @@ pub struct Storm {
     // Subtitles
     pub(crate) subtitle: String,
     pub(crate) subtitle_timer: f32,
-    pub(crate) rgb: Option<RgbController>,
 }
 
 impl Default for Storm {
@@ -132,7 +129,6 @@ impl Storm {
             animal_spawn_timer: 15.0,
             subtitle: String::new(),
             subtitle_timer: 0.0,
-            rgb: if is_openrgb_enabled() { Some(RgbController::new()) } else { None },
         }
     }
 }
@@ -152,12 +148,7 @@ impl Screensaver for Storm {
             if self.host_bias > 0.6 { self.cpu_load = (self.cpu_load + 0.08).min(0.95); }
             self.sys_refresh_timer = 0.0;
 
-            if let Some(ref r) = self.rgb {
-                // library 4.0: pull from the cached ScreenPalette.
-                let accent = query_current_palette().accent;
-                r.set_color(RgbColor::new(accent.0 / 4, accent.1 / 4, accent.2 / 4));
-            }
-        }
+}
 
         self.check_resize(cols, rows);
 

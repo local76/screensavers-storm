@@ -1,9 +1,5 @@
-//! Lightning logic and updates.
-
-use std::time::Duration;
 use crate::storm::Storm;
 use crate::storm::types::{BirdState, LogoCell, Splash, AnimalState, AnimalType};
-use library::toolkit::rgb_protocol::RgbColor;
 
 impl Storm {
     pub fn update_lightning(&mut self, delta: f32, cols: usize, rows: usize) {
@@ -19,9 +15,6 @@ impl Storm {
             self.lightning_delay -= delta;
             if self.lightning_delay <= 0.0 {
                 self.lightning_flash = 0.18;
-                if let Some(ref r) = self.rgb {
-                    r.flash(RgbColor::WHITE, Duration::from_millis(180));
-                }
                 self.subtitle = "[CRACK! Lightning Strike]".to_string();
                 self.subtitle_timer = 1.5;
 
