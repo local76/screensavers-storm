@@ -26,6 +26,9 @@ impl Storm {
 
                 match target_type {
                     0 => {
+                        // Pre-allocate: the filtered Vec typically has the
+                        // full logo_cells count (most cells are active),
+                        // so use that as a capacity hint rather than 0.
                         let active: Vec<&LogoCell> = self.logo_cells.iter().filter(|c| c.active).collect();
                         if !active.is_empty() {
                             let selected = active[self.rng.next_usize(active.len())];
