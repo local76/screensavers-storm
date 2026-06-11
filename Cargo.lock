@@ -638,14 +638,13 @@ checksum = "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981"
 
 [[package]]
 name = "library"
-version = "2026.6.11"
+version = "2026.6.10-1"
 dependencies = [
  "crossterm",
  "libc",
  "ratatui",
  "rusqlite",
  "sysinfo",
- "windows",
  "windows-sys 0.59.0",
  "winreg 0.56.0",
 ]
@@ -1341,7 +1340,7 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "storm"
-version = "2026.7.0"
+version = "2026.6.10-1"
 dependencies = [
  "embed-resource",
  "library",
