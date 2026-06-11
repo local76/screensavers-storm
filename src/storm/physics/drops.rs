@@ -6,11 +6,15 @@ use crate::storm::types::{Drop, Splash, Phase};
 impl Storm {
     pub fn update_drops(&mut self, delta: f32, cols: usize, rows: usize, speed_mult: f32) {
         // Adjust drop count (increased for heavy cold rain)
-        let target_drops = match self.drop_count_opt {
+        let mut target_drops = match self.drop_count_opt {
             0 => (cols).clamp(20, 100),
             2 => (cols * 3).clamp(60, 400),
             _ => (cols * 2).clamp(40, 250),
         };
+        if self.on_battery {
+            target_drops = (target_drops as f32 * 0.55) as usize;
+        }
+        target_drops = (target_drops as f32 * self.quality_scale) as usize;
 
         if self.drops.len() < target_drops {
             while self.drops.len() < target_drops {
@@ -83,7 +87,9 @@ impl Storm {
                                     cell.water = (cell.water + 0.45).min(2.5);
                                     
                                     // Spawn splash particles
-                                    for _ in 0..3 {
+                                    let splash_count = if self.on_battery { 1 } else { 3 };
+                                    let splash_count = (splash_count as f32 * self.quality_scale).max(1.0) as usize;
+                                    for _ in 0..splash_count {
                                         self.splashes.push(Splash {
                                             x: col as f32,
                                             y: row as f32,
@@ -127,7 +133,9 @@ impl Storm {
                 
                 // Foreground drops spawn floor splash particles and accumulate puddles
                 if !drop.is_background {
-                    for _ in 0..2 {
+                    let splash_count = if self.on_battery { 1 } else { 2 };
+                    let splash_count = (splash_count as f32 * self.quality_scale).max(1.0) as usize;
+                    for _ in 0..splash_count {
                         self.splashes.push(Splash {
                             x: col as f32,
                             y: (rows as f32 - 1.0),

@@ -31,9 +31,10 @@ depends = "libc6, xterm"
 section = "utils"
 priority = "optional"
 assets = [
-    ["target/release/storm", "usr/libexec/screensaver-shims/storm", "755"],
-    ["assets/scene-storm.desktop", "usr/share/applications/scene-storm.desktop", "644"],
-    ["assets/scene-storm.xml", "usr/share/xscreensaver/config/scene-storm.xml", "644"]
+    ["target/release/storm", "usr/libexec/local76/screensavers/storm", "755"],
+    ["assets/local76-storm.desktop", "usr/share/applications/local76-storm.desktop", "644"],
+    ["assets/local76-storm.xml", "usr/share/xscreensaver/config/local76-storm.xml", "644"],
+    ["assets/local76-storm.png", "usr/share/pixmaps/local76-storm.png", "644"]
 ]
 
 [package.metadata.generate-rpm]
@@ -45,9 +46,10 @@ summary = "storm - retro terminal screensaver effect"
 description = "Screensaver effect (storm) part of the screensavers collection."
 license = "MIT"
 assets = [
-    { source = "target/release/storm", dest = "/usr/libexec/screensaver-shims/storm", mode = "755" },
-    { source = "assets/scene-storm.desktop", dest = "/usr/share/applications/scene-storm.desktop", mode = "644" },
-    { source = "assets/scene-storm.xml", dest = "/usr/share/xscreensaver/config/scene-storm.xml", mode = "644" }
+    { source = "target/release/storm", dest = "/usr/libexec/local76/screensavers/storm", mode = "755" },
+    { source = "assets/local76-storm.desktop", dest = "/usr/share/applications/local76-storm.desktop", mode = "644" },
+    { source = "assets/local76-storm.xml", dest = "/usr/share/xscreensaver/config/local76-storm.xml", mode = "644" },
+    { source = "assets/local76-storm.png", dest = "/usr/share/pixmaps/local76-storm.png", mode = "644" }
 ]
 [patch."https://github.com/local76/library.git"]
 library = { path = "../library" }
