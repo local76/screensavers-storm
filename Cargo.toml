@@ -30,3 +30,32 @@ lto = true               # Enable Link Time Optimization
 codegen-units = 1        # Reduce codegen units to maximize size reduction
 panic = "abort"          # Remove panic unwinding code
 strip = true             # Strip symbols and debuginfo
+
+[package.metadata.deb]
+name = "scene-storm"
+maintainer = "Screensavers Developer <dev@local76.org>"
+extended-description = "Screensaver effect (storm) part of the screensavers collection."
+depends = "libc6, xterm"
+section = "utils"
+priority = "optional"
+assets = [
+    ["target/release/storm", "usr/libexec/local76/screensavers/storm", "755"],
+    ["assets/local76-storm.desktop", "usr/share/applications/local76-storm.desktop", "644"],
+    ["assets/local76-storm.xml", "usr/share/xscreensaver/config/local76-storm.xml", "644"],
+    ["assets/local76-storm.png", "usr/share/pixmaps/local76-storm.png", "644"]
+]
+
+[package.metadata.generate-rpm]
+name = "scene-storm"
+version = "2026.6.10-1"
+release = "1"
+arch = "x86_64"
+summary = "storm - retro terminal screensaver effect"
+description = "Screensaver effect (storm) part of the screensavers collection."
+license = "MIT"
+assets = [
+    { source = "target/release/storm", dest = "/usr/libexec/local76/screensavers/storm", mode = "755" },
+    { source = "assets/local76-storm.desktop", dest = "/usr/share/applications/local76-storm.desktop", mode = "644" },
+    { source = "assets/local76-storm.xml", dest = "/usr/share/xscreensaver/config/local76-storm.xml", mode = "644" },
+    { source = "assets/local76-storm.png", dest = "/usr/share/pixmaps/local76-storm.png", mode = "644" }
+]
