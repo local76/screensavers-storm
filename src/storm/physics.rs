@@ -1,12 +1,14 @@
-﻿//! Physics submodules and core resize checks/color generation helpers.
+//! Physics submodules and core resize checks/color generation helpers.
 
 pub mod drops;
-pub mod entities;
+pub mod bird;
+pub mod scenery;
+pub mod animals;
 pub mod lightning;
 
-use library::core::LcgRng;
-use library::core::logo_block::render_logo_block;
-use library::toolkit::sys_info::get_system_info;
+use crate::runner::core::LcgRng;
+use crate::runner::core::logo_block::render_logo_block;
+use crate::runner::toolkit::sys_info::get_system_info;
 
 use crate::storm::Storm;
 use crate::storm::types::{LogoCell, Phase, BirdState};

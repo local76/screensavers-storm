@@ -6,11 +6,11 @@ pub mod types;
 pub mod physics;
 pub mod draw;
 
-use library::core::{LcgRng, TerminalCell};
+use crate::runner::core::{LcgRng, TerminalCell};
 use std::time::Duration;
-use library::core::screensaver::Screensaver;
+use crate::runner::core::screensaver::Screensaver;
 
-use library::toolkit::sys_info::get_system_info;
+use crate::runner::toolkit::sys_info::get_system_info;
 
 
 #[allow(unused_imports)]

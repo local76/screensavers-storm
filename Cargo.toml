@@ -10,46 +10,23 @@ name = "storm"
 path = "src/main.rs"
 
 [dependencies]
-library = { git = "https://github.com/local76/library.git", tag = "v2026.6.10-1", features = ["screensaver-runtime"] }
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_System_Console",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Gdi",
+    "Win32_Media",
+] }
 
 [build-dependencies]
-library = { git = "https://github.com/local76/library.git", tag = "v2026.6.10-1", features = ["screensaver-runtime"] }
 embed-resource = "2"
-
 [profile.release]
-opt-level = "z"
-lto = true
-codegen-units = 1
-strip = true
-panic = "abort"
-
-[package.metadata.deb]
-name = "scene-storm"
-maintainer = "Screensavers Developer <dev@local76.org>"
-extended-description = "Screensaver effect (storm) part of the screensavers collection."
-depends = "libc6, xterm"
-section = "utils"
-priority = "optional"
-assets = [
-    ["target/release/storm", "usr/libexec/local76/screensavers/storm", "755"],
-    ["assets/local76-storm.desktop", "usr/share/applications/local76-storm.desktop", "644"],
-    ["assets/local76-storm.xml", "usr/share/xscreensaver/config/local76-storm.xml", "644"],
-    ["assets/local76-storm.png", "usr/share/pixmaps/local76-storm.png", "644"]
-]
-
-[package.metadata.generate-rpm]
-name = "scene-storm"
-version = "2026.6.10-1"
-release = "1"
-arch = "x86_64"
-summary = "storm - retro terminal screensaver effect"
-description = "Screensaver effect (storm) part of the screensavers collection."
-license = "MIT"
-assets = [
-    { source = "target/release/storm", dest = "/usr/libexec/local76/screensavers/storm", mode = "755" },
-    { source = "assets/local76-storm.desktop", dest = "/usr/share/applications/local76-storm.desktop", mode = "644" },
-    { source = "assets/local76-storm.xml", dest = "/usr/share/xscreensaver/config/local76-storm.xml", mode = "644" },
-    { source = "assets/local76-storm.png", dest = "/usr/share/pixmaps/local76-storm.png", mode = "644" }
-]
-[patch."https://github.com/local76/library.git"]
-library = { path = "../library" }
+opt-level = "z"          # Optimize for size
+lto = true               # Enable Link Time Optimization
+codegen-units = 1        # Reduce codegen units to maximize size reduction
+panic = "abort"          # Remove panic unwinding code
+strip = true             # Strip symbols and debuginfo
